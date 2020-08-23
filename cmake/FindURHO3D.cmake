@@ -11,8 +11,12 @@ if(WIN32)
 
         find_path( URHO3D_INCLUDE_DIR Urho3D "${URHO3D_PATH}/include" )
         find_path( URHO3D_3RD_INCLUDE_DIR SDL "${URHO3D_PATH}/include/Urho3D/ThirdParty" )
-        find_library( URHO3D_LIBRARY Urho3D.lib "${URHO3D_PATH}/lib" )
 
+        if(${CMAKE_BUILD_TYPE} STREQUAL "Release" )
+            find_library( URHO3D_LIBRARY Urho3D.lib "${URHO3D_PATH}/lib" )
+        else()
+            find_library( URHO3D_LIBRARY Urho3D_d.lib "${URHO3D_PATH}/lib" )
+        endif()
         
         message(${URHO3D_3RD_INCLUDE_DIR})
 

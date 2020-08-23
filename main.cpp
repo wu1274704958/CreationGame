@@ -101,4 +101,19 @@ void HelloWorld::HandleUpdate(StringHash eventType, VariantMap& eventData)
 }
 
 
-URHO3D_DEFINE_APPLICATION_MAIN(HelloWorld)
+#if !defined(IOS) && !defined(TVOS)
+
+int RunApplication() 
+{ 
+    Urho3D::SharedPtr<Urho3D::Context> context(new Urho3D::Context()); 
+    Urho3D::SharedPtr<HelloWorld> application(new HelloWorld(context));
+    return application->Run(); 
+} 
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd) 
+{ 
+    Urho3D::ParseArguments(GetCommandLineW()); 
+    return RunApplication();
+}
+
+#endif
