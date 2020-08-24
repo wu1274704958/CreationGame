@@ -1,4 +1,5 @@
 
+#include <find_path.hpp>
 #include <Sample.h>
 
 class HelloWorld : public Sample
@@ -110,9 +111,27 @@ int RunApplication()
     return application->Run(); 
 } 
 
+
+
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE prevInstance, PSTR cmdLine, int showCmd) 
 { 
-    Urho3D::ParseArguments(GetCommandLineW()); 
+   
+    auto res_path = wws::find_path(3, "res", true);
+    if (!res_path.empty())
+    {
+        auto absolute_str = std::filesystem::absolute(res_path).generic_string();
+        std::string args_str = "-pp";
+        args_str += " ";
+        args_str += absolute_str;
+        
+        Urho3D::ParseArguments(String(args_str.c_str()),false);
+    }
+    else {
+        return -1;
+    }
+
+    
     return RunApplication();
 }
 
